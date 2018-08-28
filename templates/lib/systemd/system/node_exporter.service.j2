@@ -1,0 +1,9 @@
+[Unit]
+Description=node_exporter
+After=network.target
+[Service]
+Type=simple
+ExecStart=/opt/node_exporter/node_exporter  {{ start_args | join(' ') }}
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+---
+# tasks file for prometheus exporters
+
+- name: "fail if Operating System is not CentOS-7.x"
+  fail: msg="Operating System {{ ansible_distribution }}-{{ ansible_distribution_version }} not supported"
+  when: (ansible_distribution != "CentOS" and ansible_distribution != "RedHat") or ansible_distribution_major_version != "7"
+
+- name: install node_exporter on CentOS
+  include: node_exporter.yml
+  when: install_node_exporter is defined and install_node_exporter == true
+

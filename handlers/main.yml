@@ -1,0 +1,5 @@
+---
+# handlers file for prometheus exporters
+
+- name: reload node_exporter
+  shell: systemctl daemon-reload; systemctl enable node_exporter; systemctl restart node_exporter; systemctl status node_exporter | grep running

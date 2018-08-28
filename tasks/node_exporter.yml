@@ -1,0 +1,21 @@
+---
+# tasks file for installing prometheus on centos7
+
+
+- name: make sure /opt/app/node_exporter directory exists
+  file: path=/opt/app/node_exporter state=directory
+
+- name: uncompress package
+  shell: tar -zxf /opt/download/{{ node_exporter_tgz_file_name }}.tar.gz -C /opt/app/node_exporter
+
+- name: make link
+  file: src=/opt/app/node_exporter/{{ node_exporter_tgz_file_name }} dest=/opt/node_exporter state=link
+
+- name: init /lib/systemd/system/node_exporter.service
+  template: src=lib/systemd/system/node_exporter.service.j2 dest=/lib/systemd/system/node_exporter.service backup=yes
+  notify: reload node_exporter
+
+- name: start and enable node_exporter
+  shell: systemctl start node_exporter
+
+
